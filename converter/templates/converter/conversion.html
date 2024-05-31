@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>Project Name: {{conversion.project_name}}</li>
+        <li>SB3 File: {{conversion.sb3_file_name}}</li>
+        <li>Created: {{conversion.created}}</li>
+        <li>Link: {{conversion.project_link}}</li>
+        <li>Download: <a href="{% url 'download' conversion.project_link %}">{{conversion.project_name}}-{{conversion.project_link}}.zip</a>  </li>
+        <li>Dir: {{conversion.tmpdir}}</li>
+        <li>Language: {{conversion.language}}</li>
+        <li>JSON: {{conversion.sb3_json}}</li>
+        <li>Intermediate: {{conversion.intermediate}}</li>
+        <li>Python: {{conversion.python_code}}</li>
+    </ul>
+</body>
+</html>

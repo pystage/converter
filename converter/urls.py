@@ -22,4 +22,6 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('convert', views.convert, name='convert'),
+    path('conversion/<str:project_link>', views.conversion, name='conversion'),
+    path('download/<str:project_link>', views.download, name='download'),
 ]

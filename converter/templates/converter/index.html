@@ -10,6 +10,7 @@
     <form action="convert" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="sb3" id="sb3"><br/>
+        <input type="text" name="language" id="language" value="en"><br/>
         <input type="submit" value="Convert">
     </form>    
 </body>
