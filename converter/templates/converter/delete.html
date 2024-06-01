@@ -1,0 +1,18 @@
+{% extends 'converter/_base.html' %}
+
+{% block content %}
+
+<h1>Permanently delete this conversion</h1>
+
+<p>
+Are you sure you want to delete this conversion? Please do not delete conversions that are not created by you and conversions that are linked in one of the PyStage issues.
+</p>
+<p>
+    <a  class="btn btn-primary" href="{% url 'conversion' project_link %}">Keep the conversion!</a>
+    <a  class="btn btn-danger" href="{% url 'delete_confirmed' project_link %}">Delete Conversion (there is no undo!)</a>
+</p>
+
+{% endblock content %}
+
+
+

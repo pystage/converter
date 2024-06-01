@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyStage Converter</title>
-</head>
-<body>
+{% extends 'converter/_base.html' %}
+{% block content %}
 
-    <form action="convert" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="sb3" id="sb3"><br/>
-        <input type="text" name="language" id="language" value="en"><br/>
-        <input type="submit" value="Convert">
-    </form>    
-</body>
-</html>
+  
+<form action="convert" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+<div class="mb-3">
+    <label for="sb3" class="form-label">SB3 File</label>
+    <input class="form-control" type="file" name="sb3" id="sb3" aria-describedby="sb3help"><br/>
+    <div id="sb3help" class="form-text">Upload the .sb3 File. You get this file by downloading your project in Scratch.</div>
+  </div>
+   <div class="mb-3">
+    <label for="language" class="form-label">Language</label>
+    <select id="language" class="form-select" name="language" aria-describedby="langhelp">
+        <option selected>en</option>
+        <option>de</option>
+        <option>core</option>
+    </select>
+    <div id="langhelp" class="form-text">The language used for the API Calls. Currently, only English is fully supported.</div>
+</div>
+
+  <button type="submit" class="btn btn-primary">Convert</button>
+
+</form>    
+{% endblock content %}

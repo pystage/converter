@@ -8,6 +8,7 @@ import json
 import zipfile
 import io
 import os
+import shutil
 
 from . import models
 
@@ -19,7 +20,7 @@ def index(request):
 
 def conversion(request, project_link):
     conversion = get_object_or_404(models.Conversion, project_link=project_link)
-    return render(request, "converter/conversion.html", {"conversion": conversion})
+    return render(request, "converter/conversion.html", {"conversion": conversion, "permalink": request.build_absolute_uri(f"/conversion/{project_link}")})
 
 def download(request, project_link):
     conversion = get_object_or_404(models.Conversion, project_link=project_link)
@@ -36,7 +37,15 @@ def download(request, project_link):
     response['Content-Disposition'] = 'attachment; filename={}-{}.zip'.format(conversion.project_name, conversion.project_link)
     return response
 
+def delete(request, project_link):
+    return render(request, "converter/delete.html", {"project_link": project_link})
 
+
+def delete_confirmed(request, project_link):
+    conversion = get_object_or_404(models.Conversion, project_link=project_link)
+    shutil.rmtree(conversion.tmpdir)
+    conversion.delete()
+    return redirect("index")
 
 def convert(request):
     if request.POST:

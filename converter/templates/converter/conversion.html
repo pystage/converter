@@ -1,22 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <ul>
-        <li>Project Name: {{conversion.project_name}}</li>
-        <li>SB3 File: {{conversion.sb3_file_name}}</li>
-        <li>Created: {{conversion.created}}</li>
-        <li>Link: {{conversion.project_link}}</li>
-        <li>Download: <a href="{% url 'download' conversion.project_link %}">{{conversion.project_name}}-{{conversion.project_link}}.zip</a>  </li>
-        <li>Dir: {{conversion.tmpdir}}</li>
-        <li>Language: {{conversion.language}}</li>
-        <li>JSON: {{conversion.sb3_json}}</li>
-        <li>Intermediate: {{conversion.intermediate}}</li>
-        <li>Python: {{conversion.python_code}}</li>
-    </ul>
-</body>
-</html>
+{% extends 'converter/_base.html' %}
+{% block content %}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main-tab-pane" type="button" role="tab" aria-controls="main-tab-pane" aria-selected="true">Main</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="python-tab" data-bs-toggle="tab" data-bs-target="#python-tab-pane" type="button" role="tab" aria-controls="python-tab-pane" aria-selected="false">Python</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="sb3-tab" data-bs-toggle="tab" data-bs-target="#sb3-tab-pane" type="button" role="tab" aria-controls="sb3-tab-pane" aria-selected="false">SB3 JSON</button>
+      </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="intermediate-tab" data-bs-toggle="tab" data-bs-target="#intermediate-tab-pane" type="button" role="tab" aria-controls="intermediate-tab-pane" aria-selected="false">Intermediate Representation</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
+        <p class="my-3"><strong>Share this conversion:</strong> <input type="text" value="{{permalink}}" disabled size="40"/></p>
+        <table class="table">
+            <tr>
+                <th>Project Name</th>
+                <td>{{conversion.project_name}}</td>
+            </tr>
+            <tr>
+                <th>SB3 File</th>
+                <td>{{conversion.sb3_file_name}}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{conversion.created}}</td>
+            </tr>
+            <tr>
+                <th>Download</th>
+                <td><a href="{% url 'download' conversion.project_link %}">{{conversion.project_name}}-{{conversion.project_link}}.zip</a></td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{conversion.language}}</td>
+            </tr>
+        </table>
+        <p>
+            <strong>Important:</strong> The result is only stored temporarily and will be deleted on a regular basis. If you do <strong>not</strong> want to store the conversion result (e.g. to get support), you can <a href="{% url 'delete' conversion.project_link %}">delete it</a> immediately. 
+
+        </p>
+    </div>
+    <div class="tab-pane fade" id="python-tab-pane" role="tabpanel" aria-labelledby="python-tab" tabindex="0">
+        <pre><code>{{conversion.python_code}}</code></pre>
+    </div>
+    <div class="tab-pane fade" id="sb3-tab-pane" role="tabpanel" aria-labelledby="sb3-tab" tabindex="0">
+        <pre><code>{{conversion.sb3_json}}</code></pre>
+    </div>
+    <div class="tab-pane fade" id="intermediate-tab-pane" role="tabpanel" aria-labelledby="intermediate-tab" tabindex="0">
+        <pre><code>{{conversion.intermediate}}</code></pre>
+    </div>
+  </div>
+  
+
+{% endblock content %}
