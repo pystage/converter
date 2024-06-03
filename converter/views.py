@@ -22,6 +22,15 @@ def conversion(request, project_link):
     conversion = get_object_or_404(models.Conversion, project_link=project_link)
     return render(request, "converter/conversion.html", {"conversion": conversion, "permalink": request.build_absolute_uri(f"/conversion/{project_link}")})
 
+def download_sb3(request, project_link):
+    conversion = get_object_or_404(models.Conversion, project_link=project_link)
+    file_name = "{}/{}.sb3".format(conversion.tmpdir, conversion.project_name)
+    with open(file_name, mode="rb") as f:
+        response = HttpResponse(f.read())
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment; filename={}-{}.sb3'.format(conversion.project_name, conversion.project_link)
+        return response
+
 def download(request, project_link):
     conversion = get_object_or_404(models.Conversion, project_link=project_link)
     buffer = io.BytesIO()

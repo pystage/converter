@@ -24,6 +24,7 @@ urlpatterns = [
     path('convert', views.convert, name='convert'),
     path('conversion/<str:project_link>', views.conversion, name='conversion'),
     path('download/<str:project_link>', views.download, name='download'),
+    path('download-sb3/<str:project_link>', views.download_sb3, name='download_sb3'),
     path('delete/<str:project_link>', views.delete, name='delete'),
     path('delete-confirmed/<str:project_link>', views.delete_confirmed, name='delete_confirmed'),
 ]

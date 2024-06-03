@@ -1,4 +1,4 @@
-{% extends 'converter/_base.html' %}
+{% extends "converter/_base.html" %}
 {% block content %}
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -17,27 +17,27 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
-        <p class="my-3"><strong>Share this conversion:</strong> <input type="text" value="{{permalink}}" disabled size="60"/></p>
+        <p class="my-3"><strong>Share this conversion:</strong> <input type="text" value="{{ permalink }}" disabled size="60"/></p>
         <table class="table">
             <tr>
                 <th>Project Name</th>
-                <td>{{conversion.project_name}}</td>
+                <td>{{ conversion.project_name }}</td>
             </tr>
             <tr>
                 <th>SB3 File</th>
-                <td>{{conversion.sb3_file_name}}</td>
+                <td><a href="{% url 'download_sb3' conversion.project_link %}">{{ conversion.sb3_file_name }}</a></td>
             </tr>
             <tr>
                 <th>Created</th>
-                <td>{{conversion.created}}</td>
+                <td>{{ conversion.created }}</td>
             </tr>
             <tr>
                 <th>Download</th>
-                <td><a href="{% url 'download' conversion.project_link %}">{{conversion.project_name}}-{{conversion.project_link}}.zip</a></td>
+                <td><a href="{% url 'download' conversion.project_link %}">{{ conversion.project_name }}-{{ conversion.project_link }}.zip</a></td>
             </tr>
             <tr>
                 <th>Language</th>
-                <td>{{conversion.language}}</td>
+                <td>{{ conversion.language }}</td>
             </tr>
         </table>
         <p>
@@ -46,13 +46,13 @@
         </p>
     </div>
     <div class="tab-pane fade" id="python-tab-pane" role="tabpanel" aria-labelledby="python-tab" tabindex="0">
-        <pre><code>{{conversion.python_code}}</code></pre>
+        <pre><code>{{ conversion.python_code }}</code></pre>
     </div>
     <div class="tab-pane fade" id="sb3-tab-pane" role="tabpanel" aria-labelledby="sb3-tab" tabindex="0">
-        <pre><code>{{conversion.sb3_json}}</code></pre>
+        <pre><code>{{ conversion.sb3_json }}</code></pre>
     </div>
     <div class="tab-pane fade" id="intermediate-tab-pane" role="tabpanel" aria-labelledby="intermediate-tab" tabindex="0">
-        <pre><code>{{conversion.intermediate}}</code></pre>
+        <pre><code>{{ conversion.intermediate }}</code></pre>
     </div>
   </div>
   
