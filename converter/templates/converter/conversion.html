@@ -21,7 +21,7 @@
         <table class="table">
             <tr>
                 <th>Project Name</th>
-                <td>{{ conversion.project_name }}</td>
+                <td>{{ conversion.project_name }}{% if conversion.scratch_id %} (Public on <a href="https://scratch.mit.edu/projects/{{conversion.scratch_id}}/">Scratch</a>){% endif %}</td>
             </tr>
             <tr>
                 <th>SB3 File</th>

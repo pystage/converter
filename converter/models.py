@@ -14,6 +14,7 @@ class Conversion(models.Model):
     project_name = models.TextField()
     sb3_file_name = models.TextField()
     project_link = models.CharField(max_length=100, unique=True)
+    scratch_id = models.CharField(max_length=100, null=True)
     tmpdir = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     python_code = models.TextField()
