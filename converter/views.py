@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib import messages
+
 import tempfile
 import pystage
 from pystage.convert import sb3
@@ -98,9 +100,10 @@ def convert(request):
 
     project_link = models.generate_unique_link()
     language = request.POST["language"]
-        
-
-    if request.FILES and "sb3" in request.FILES:
+    
+    if not "language" in request.POST or request.POST["language"] not in ["en", "de", "core"]:
+        messages.error(request, "Unsupported language set.")
+    elif request.FILES and "sb3" in request.FILES:
         print("File found.")
         file = request.FILES["sb3"]
         project_name = sb3.to_filename(Path(file.name).stem)
@@ -109,8 +112,10 @@ def convert(request):
         with open(file_name, mode="wb") as f:
             for chunk in file.chunks():
                 f.write(chunk)
-        _process_sb3_file(request, tmpdir, file_name, project_name, directory, language, project_link, scratch_id)
-        
+        try:
+            _process_sb3_file(request, tmpdir, file_name, project_name, directory, language, project_link, scratch_id)
+        except:
+            messages.error(request, "Could not process the uploaded SB3 file.")
     elif scratch_id:
         try:
             response = requests.get(f"https://api.scratch.mit.edu/projects/{scratch_id}")
@@ -136,6 +141,11 @@ def convert(request):
                         zip.writestr(sound["md5ext"], response.content)
             _process_sb3_file(request, tmpdir, file_name, project_name, directory, language, project_link, scratch_id)
         except Exception as e:
-            print(e)
-          
+            messages.error(request, "Could not download data from Scratch. Is the project publicly shared?")
+    else:
+        messages.error(request, "Please provide either an SB3 File or a publicly shared Scratch URL.")
+    if messages.get_messages(request):
+        # return render(request, "converter/index.html", {})
+        return redirect("index")
+    
     return redirect("conversion", project_link)
